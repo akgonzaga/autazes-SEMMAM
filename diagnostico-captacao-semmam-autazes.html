@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de Captação de Recursos — SEMMAM / Autazes-AM</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    --forest:   #1A3A2A;
+    --forest2:  #234D38;
+    --forest3:  #2E6347;
+    --sage:     #D4E8D9;
+    --sage2:    #EAF3EC;
+    --gold:     #C8960C;
+    --gold-lt:  #F5E8C0;
+    --red:      #C0392B;
+    --red-lt:   #FAEAE8;
+    --blue:     #1A5276;
+    --blue-lt:  #EAF2FA;
+    --teal:     #117A65;
+    --teal-lt:  #E8F5F1;
+    --ink:      #1C2620;
+    --muted:    #56706A;
+    --line:     #D1DDD8;
+    --bg:       #F6FAF7;
+    --white:    #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: var(--forest);
+    color: var(--white);
+    padding: 60px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(200,150,12,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    color: #A8D5B0;
+  }
+  .cover h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.18;
+    font-weight: 400;
+    max-width: 680px;
+    margin-bottom: 18px;
+  }
+  .cover h1 em { font-style: italic; color: #A8D5B0; }
+  .cover-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,.7);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,.15);
+    padding-top: 24px;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); }
+  .meta-value { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.9); }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--forest3);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 13.5px;
+    max-width: 720px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  /* ===== SUMMARY CARDS ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 0;
+  }
+  .sum-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sum-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent, var(--forest3));
+    border-radius: 12px 12px 0 0;
+  }
+  .sum-card.green  { --accent: #2E7D4F; }
+  .sum-card.gold   { --accent: #C8960C; }
+  .sum-card.red    { --accent: #C0392B; }
+  .sum-card.blue   { --accent: #1A5276; }
+  .sum-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .sum-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .sum-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ===== PROFILE ===== */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .profile-block {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 26px 24px;
+  }
+  .profile-block h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--sage2);
+    font-size: 13px;
+    gap: 12px;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-key { color: var(--muted); flex-shrink: 0; }
+  .stat-val { font-weight: 600; color: var(--ink); text-align: right; }
+  .highlight-val { color: var(--forest3); }
+
+  .alert-box {
+    background: #FFFDE7;
+    border: 1px solid #F9A825;
+    border-left: 4px solid #F9A825;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    color: #5D4037;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+  .alert-box strong { color: #BF6900; }
+
+  /* ===== PROGRAM CARDS ===== */
+  .prog-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .prog-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .prog-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .prog-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+  .prog-title-block { flex: 1; }
+  .prog-origin {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+  }
+  .prog-name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .prog-sub { font-size: 12px; color: var(--muted); }
+  .prog-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+    flex-shrink: 0;
+  }
+  .status-badge {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: 3px 10px; border-radius: 20px;
+  }
+  .status-badge.acessivel   { background: #E8F5E9; color: #2E7D32; }
+  .status-badge.parcial     { background: #FFF8E1; color: #F57F17; }
+  .status-badge.potencial   { background: #E3F2FD; color: #1565C0; }
+  .status-badge.perdendo    { background: #FFEBEE; color: #C62828; }
+  .prog-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: var(--forest); text-align: right;
+  }
+  .prog-value-label { font-size: 10px; color: var(--muted); text-align: right; }
+  .prog-body { padding: 18px 22px; }
+  .prog-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+
+  .prog-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  }
+  .tag {
+    font-size: 10.5px; font-weight: 600;
+    padding: 3px 9px; border-radius: 6px;
+    background: var(--sage2); color: var(--forest3);
+  }
+
+  .req-list { list-style: none; }
+  .req-list li {
+    font-size: 12px; color: var(--ink);
+    padding: 5px 0;
+    display: flex; align-items: flex-start; gap: 8px;
+    border-bottom: 1px solid var(--sage2);
+    line-height: 1.5;
+  }
+  .req-list li:last-child { border-bottom: none; }
+  .req-list li .icon { flex-shrink: 0; margin-top: 1px; }
+  .check { color: #2E7D32; }
+  .warn  { color: #F57F17; }
+  .cross { color: #C62828; }
+
+  .action-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--forest); color: var(--white);
+    font-size: 10.5px; font-weight: 600;
+    padding: 4px 12px; border-radius: 6px;
+    margin-top: 10px;
+  }
+
+  /* ===== LOSS TABLE ===== */
+  .loss-section {
+    background: var(--red-lt);
+    border: 1.5px solid #F5C6C3;
+    border-radius: 14px;
+    padding: 28px 26px;
+    margin-bottom: 24px;
+  }
+  .loss-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--red);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .loss-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .loss-table thead th {
+    text-align: left;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .07em;
+    color: var(--muted);
+    padding: 8px 12px;
+    border-bottom: 1.5px solid #F5C6C3;
+  }
+  .loss-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(200,0,0,.08);
+    vertical-align: top;
+  }
+  .loss-table tbody tr:last-child td { border-bottom: none; }
+  .loss-val { font-weight: 700; color: var(--red); white-space: nowrap; }
+  .loss-reason { color: var(--muted); line-height: 1.5; }
+  .loss-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px solid #E8A8A5;
+  }
+  .loss-total-label { font-size: 12px; font-weight: 700; color: var(--red); text-transform: uppercase; }
+  .loss-total-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; color: var(--red);
+  }
+
+  /* ===== PRIORITY MATRIX ===== */
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .matrix-quad {
+    border-radius: 12px;
+    padding: 20px 20px 16px;
+    border: 1px solid transparent;
+  }
+  .matrix-quad.q1 { background: #E8F5E9; border-color: #A5D6A7; }
+  .matrix-quad.q2 { background: #FFF8E1; border-color: #FFD54F; }
+  .matrix-quad.q3 { background: #E3F2FD; border-color: #90CAF9; }
+  .matrix-quad.q4 { background: #F3E5F5; border-color: #CE93D8; }
+  .matrix-quad-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .matrix-quad-label {
+    font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .q1 .matrix-quad-label { color: #2E7D32; }
+  .q2 .matrix-quad-label { color: #E65100; }
+  .q3 .matrix-quad-label { color: #1565C0; }
+  .q4 .matrix-quad-label { color: #6A1B9A; }
+  .matrix-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12.5px; color: var(--ink);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    line-height: 1.4;
+  }
+  .matrix-item:last-child { border-bottom: none; }
+  .matrix-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .q1 .matrix-num { background: #2E7D32; color: white; }
+  .q2 .matrix-num { background: #E65100; color: white; }
+  .q3 .matrix-num { background: #1565C0; color: white; }
+  .q4 .matrix-num { background: #6A1B9A; color: white; }
+
+  /* ===== ACTION PLAN ===== */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--line);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -32px;
+    top: 3px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--forest3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: var(--forest3);
+  }
+  .timeline-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .timeline-period {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--forest3);
+    background: var(--sage);
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .timeline-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .timeline-body { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  .timeline-body ul { padding-left: 16px; margin-top: 4px; }
+  .timeline-body li { margin-bottom: 2px; }
+
+  /* ===== LEGAL FRAMEWORK ===== */
+  .law-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .law-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .law-icon {
+    font-size: 22px; flex-shrink: 0; margin-top: 1px;
+  }
+  .law-num {
+    font-size: 11px; font-weight: 700; color: var(--forest3);
+    text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px;
+  }
+  .law-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .law-desc { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+
+  /* ===== ICMS ECOLÓGICO DEEP-DIVE ===== */
+  .icms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .icms-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .icms-card .ic-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted); margin-bottom: 4px;
+  }
+  .icms-card .ic-title { font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .icms-card .ic-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: var(--forest); line-height: 1;
+  }
+  .icms-card .ic-max { font-size: 11px; color: var(--muted); }
+
+  .criteria-list { list-style: none; margin-top: 16px; }
+  .criteria-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid var(--sage2);
+    font-size: 12.5px;
+  }
+  .criteria-list li:last-child { border-bottom: none; }
+  .criteria-status {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; padding: 2px 7px; border-radius: 5px;
+    flex-shrink: 0;
+  }
+  .cs-ok   { background: #E8F5E9; color: #2E7D32; }
+  .cs-pend { background: #FFF8E1; color: #E65100; }
+  .cs-no   { background: #FFEBEE; color: #C62828; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--forest);
+    color: rgba(255,255,255,.6);
+    padding: 32px 64px;
+    font-size: 11.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer strong { color: rgba(255,255,255,.9); }
+
+  /* Divider */
+  .div-line { height: 1px; background: var(--line); margin: 28px 0; }
+
+  @media print {
+    body { font-size: 11px; }
+    .cover { padding: 40px 48px; }
+    .section { padding: 36px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="container">
+    <div class="cover-badge">🌿 Diagnóstico Técnico · Julho 2026</div>
+    <h1>Levantamento & Diagnóstico de<br><em>Captação de Recursos</em><br>para a SEMMAM</h1>
+    <p class="cover-sub">Mapeamento completo de programas federais e estaduais, valores potenciais e recursos perdidos para a Secretaria Municipal de Meio Ambiente de Autazes / Amazonas.</p>
+    <div class="cover-meta">
+      <div class="meta-item">
+        <span class="meta-label">Município</span>
+        <span class="meta-value">Autazes – AM</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Órgão</span>
+        <span class="meta-value">SEMMAM</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Competência</span>
+        <span class="meta-value">Federal + Estadual</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Programas mapeados</span>
+        <span class="meta-value">16 fontes</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Potencial estimado</span>
+        <span class="meta-value">R$ 5–18 M/ano</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div class="container">
+<div class="section">
+  <div class="section-eyebrow">Visão Geral</div>
+  <div class="section-title">Panorama Diagnóstico</div>
+  <div class="section-desc">O município de Autazes possui posição estratégica na Amazônia, com cobertura florestal expressiva, povo indígena Mura e comunidades ribeirinhas — todos ativos elegíveis para múltiplos instrumentos de financiamento ambiental. Contudo, estima-se que parte relevante desses recursos permanece não-capturada por lacunas institucionais, falta de projetos formalizados e ausência de enquadramento em programas-chave.</div>
+
+  <div class="summary-grid">
+    <div class="sum-card green">
+      <div class="sum-label">Fontes Identificadas</div>
+      <div class="sum-num">16</div>
+      <div class="sum-desc">Programas federais e estaduais acessíveis ao município</div>
+    </div>
+    <div class="sum-card blue">
+      <div class="sum-label">Potencial Anual</div>
+      <div class="sum-num">R$5–18M/ano</div>
+      <div class="sum-desc">Estimativa revisada de recursos captáveis — cenário realista a otimista</div>
+    </div>
+    <div class="sum-card gold">
+      <div class="sum-label">Acesso Parcial / Pendente</div>
+      <div class="sum-num">7</div>
+      <div class="sum-desc">Programas com elegibilidade, mas sem formalização ativa</div>
+    </div>
+    <div class="sum-card red">
+      <div class="sum-label">Recursos Estimados Perdidos</div>
+      <div class="sum-num">R$2,5–18M</div>
+      <div class="sum-desc">Anualmente, por falta de enquadramento ou projetos (estimativa revisada)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROFILE ===== -->
+<div class="section">
+  <div class="section-eyebrow">Contexto Municipal</div>
+  <div class="section-title">Perfil de Autazes / AM</div>
+  <div class="section-desc">Conhecer o ativo ambiental e a capacidade institucional do município é o ponto de partida para o diagnóstico de elegibilidade em cada programa.</div>
+
+  <div class="profile-grid">
+    <div>
+      <div class="profile-block">
+        <h3>Dados Gerais</h3>
+        <div class="stat-row"><span class="stat-key">Localização</span><span class="stat-val">Sudeste de Manaus — Bioma Amazônia</span></div>
+        <div class="stat-row"><span class="stat-key">Área territorial</span><span class="stat-val highlight-val">7.599 km²</span></div>
+        <div class="stat-row"><span class="stat-key">População estimada (2024)</span><span class="stat-val">~43.000 hab.</span></div>
+        <div class="stat-row"><span class="stat-key">PIB per capita (2023)</span><span class="stat-val">R$ 14.074</span></div>
+        <div class="stat-row"><span class="stat-key">Dependência de transf. externas</span><span class="stat-val highlight-val">94,94%</span></div>
+        <div class="stat-row"><span class="stat-key">Receita total realizada (2024)</span><span class="stat-val">R$ 231,7 milhões</span></div>
+        <div class="stat-row"><span class="stat-key">Rios principais</span><span class="stat-val">Madeira, Preto do Pantaleão, Mutuca</span></div>
+        <div class="stat-row"><span class="stat-key">Povo indígena</span><span class="stat-val">Mura</span></div>
+        <div class="stat-row"><span class="stat-key">Sub-região</span><span class="stat-val">Rio Negro – Solimões (7ª)</span></div>
+        <div class="stat-row"><span class="stat-key">Possui SEMMAM ativa</span><span class="stat-val" style="color:#2E7D32;">✔ Sim</span></div>
+        <div class="stat-row"><span class="stat-key">Possui PMGIRS</span><span class="stat-val" style="color:#2E7D32;">✔ Sim (SEMA-AM, 2024)</span></div>
+      </div>
+      <div class="alert-box" style="margin-top:14px;">
+        <strong>⚠ Atenção fiscal:</strong> Autazes tem 94,94% das receitas provenientes de transferências externas — o que significa que a expansão das captações ambientais é uma das poucas alavancas reais de crescimento orçamentário da SEMMAM sem aumento tributário local.
+      </div>
+    </div>
+    <div>
+      <div class="profile-block">
+        <h3>Ativos Ambientais Elegíveis</h3>
+        <div class="stat-row"><span class="stat-key">Cobertura florestal estimada</span><span class="stat-val highlight-val">&gt; 70% do território</span></div>
+        <div class="stat-row"><span class="stat-key">Terras Indígenas (TI Mura)</span><span class="stat-val" style="color:#2E7D32;">✔ Presente</span></div>
+        <div class="stat-row"><span class="stat-key">Comunidades ribeirinhas</span><span class="stat-val" style="color:#2E7D32;">✔ Várias comunidades</span></div>
+        <div class="stat-row"><span class="stat-key">Agricultores familiares</span><span class="stat-val" style="color:#2E7D32;">✔ Público elegível PSA</span></div>
+        <div class="stat-row"><span class="stat-key">Assentamentos INCRA</span><span class="stat-val">A verificar / mapear</span></div>
+        <div class="stat-row"><span class="stat-key">Áreas protegidas no município</span><span class="stat-val">UC federal/estadual (verificar)</span></div>
+        <div class="stat-row"><span class="stat-key">Pesca artesanal / pirarucu</span><span class="stat-val" style="color:#2E7D32;">✔ Potencial PSA Pirarucu</span></div>
+        <div class="stat-row"><span class="stat-key">Agricultura familiar (CAR)</span><span class="stat-val">Parcialmente cadastrada</span></div>
+      </div>
+      <div class="profile-block" style="margin-top:14px;">
+        <h3>Capacidade Institucional SEMMAM</h3>
+        <div class="stat-row"><span class="stat-key">Secretaria exclusiva</span><span class="stat-val" style="color:#2E7D32;">✔ Sim — ponto +1 no IQA</span></div>
+        <div class="stat-row"><span class="stat-key">Conselho Mun. Meio Ambiente</span><span class="stat-val" style="color:#E65100;">⚠ Verificar se ativo (ata)</span></div>
+        <div class="stat-row"><span class="stat-key">Fundo Municipal de M.A.</span><span class="stat-val" style="color:#E65100;">⚠ Verificar regulamentação</span></div>
+        <div class="stat-row"><span class="stat-key">Legislação ambiental local</span><span class="stat-val" style="color:#E65100;">⚠ Verificar / atualizar</span></div>
+        <div class="stat-row"><span class="stat-key">Plano de Saneamento Básico</span><span class="stat-val" style="color:#C62828;">✗ Não identificado</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FEDERAL PROGRAMS ===== -->
+<div class="section">
+  <div class="section-eyebrow">Esfera Federal</div>
+  <div class="section-title">Programas Federais Acessíveis</div>
+  <div class="section-desc">Levantamento detalhado dos principais instrumentos de financiamento ambiental do Governo Federal disponíveis para o município de Autazes, com status de elegibilidade, valores estimados e requisitos de acesso.</div>
+
+  <div class="prog-grid">
+
+    <!-- PROGRAMA 1: ICMS Ecológico (Estado, mas incluído aqui por ser o mais urgente) -->
+    <!-- PROGRAMA 1: Bolsa Verde -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🌿</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA · Federal · Lei 12.512/2011 — Decreto 11.635/2023</div>
+          <div class="prog-name">Programa Bolsa Verde</div>
+          <div class="prog-sub">Pagamento por serviços ambientais para famílias de comunidades tradicionais e UCs</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Acessível</span>
+          <div class="prog-value">R$ 600</div>
+          <div class="prog-value-label">/ trimestre / família</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Paga R$ 600 trimestrais (R$ 2.400/ano) a famílias que vivem em Unidades de Conservação de uso sustentável, assentamentos ambientalmente diferenciados e territórios de povos tradicionais — ribeirinhos, indígenas, quilombolas, extrativistas. Autazes possui comunidades ribeirinhas e o povo Mura elegíveis. Em 2025, o programa atingiu 70 mil famílias no Brasil. A meta é chegar a 140 mil.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">PSA / Renda</span>
+          <span class="tag">Comunidades Tradicionais</span>
+          <span class="tag">Indígenas Mura</span>
+          <span class="tag">Ribeirinhos</span>
+          <span class="tag">UCs de Uso Sustentável</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Famílias inscritas no CadÚnico com renda per capita ≤ ½ salário mínimo</span></li>
+          <li><span class="icon check">✔</span><span>Residência em território contemplado (UC, assentamento diferenciado, TI)</span></li>
+          <li><span class="icon warn">⚠</span><span>Mapeamento e cadastramento ativo das famílias elegíveis em Autazes ainda pendente</span></li>
+          <li><span class="icon warn">⚠</span><span>Cobertura vegetal mínima de 80% na área deve ser comprovada</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Levantamento das famílias + cadastro CadÚnico + articulação com ICMBio/INCRA</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 2: Floresta+ Amazônia PSA -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E3F2FD;">🌳</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA / PNUD / Green Climate Fund · Federal</div>
+          <div class="prog-name">Projeto Floresta+ Amazônia — PSA Agricultores Familiares</div>
+          <div class="prog-sub">Pagamento por serviços ambientais para proprietários rurais com até 4 módulos fiscais</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Parcial</span>
+          <div class="prog-value">R$ 1,5K–28K</div>
+          <div class="prog-value-label">/ ano / propriedade</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Remunera agricultores familiares e posseiros de imóveis rurais com até 4 módulos fiscais que conservam vegetação nativa além do exigido pelo Código Florestal. Quanto maior a área conservada, maior o pagamento — podendo chegar a R$ 28 mil/ano. O projeto Floresta+ conta com US$ 96 milhões do Green Climate Fund. As inscrições foram estendidas até 30/06/2026. Investimento total de até R$ 30 milhões para agricultores familiares.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Agricultores Familiares</span>
+          <span class="tag">CAR</span>
+          <span class="tag">Floresta nativa</span>
+          <span class="tag">Até R$28K/ano</span>
+          <span class="tag">PNUD/GCF</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Imóvel rural de até 4 módulos fiscais no bioma Amazônia</span></li>
+          <li><span class="icon warn">⚠</span><span>Cadastro no CAR (Cadastro Ambiental Rural) — precisa verificar regularidade em Autazes</span></li>
+          <li><span class="icon warn">⚠</span><span>Inscrição ativa no programa via IPAAM/MMA — SEMMAM deve articular e divulgar</span></li>
+          <li><span class="icon cross">✗</span><span>Inscrições já em andamento — SEMMAM precisa mobilizar agricultores urgentemente</span></li>
+        </ul>
+        <div class="action-tag">→ Ação urgente: Mobilização dos agricultores familiares e regularização do CAR</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 3: Floresta+ PSA Assentamentos -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#F3E5F5;">🏡</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA / PNUD / INCRA · Federal</div>
+          <div class="prog-name">Floresta+ Amazônia — PSA Assentamentos da Reforma Agrária</div>
+          <div class="prog-sub">Pagamento por conservação florestal em assentamentos federais com redução de desmatamento</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge potencial">◉ Potencial</span>
+          <div class="prog-value">R$ 60M</div>
+          <div class="prog-value-label">Total nac. 2024-2025</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Paga por serviços ambientais em 30 áreas de reforma agrária (AM, AC, PA, RO, RR) que reduzam desmatamento em ≥25% e mantenham ≥50% de cobertura de vegetação nativa. Se Autazes possui assentamentos federais do INCRA em seu território, eles são potencialmente elegíveis. Necessário mapear se o município tem assentamentos inscritos e verificar as taxas de desmatamento.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">INCRA</span>
+          <span class="tag">Reforma Agrária</span>
+          <span class="tag">Desmatamento -25%</span>
+          <span class="tag">Cobertura ≥50%</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon warn">⚠</span><span>Mapear assentamentos federais do INCRA no território de Autazes</span></li>
+          <li><span class="icon warn">⚠</span><span>Assentamentos não podem ter embargos do IBAMA</span></li>
+          <li><span class="icon warn">⚠</span><span>Redução de pelo menos 25% do desmatamento em 2023 vs 2022 (PRODES)</span></li>
+          <li><span class="icon warn">⚠</span><span>Inscrição no CAR como imóvel rural de assentamento</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Levantamento de assentamentos + contato INCRA regional</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 4: PSA Pirarucu -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🐟</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA / PNUD / IBAMA / CONAB · Federal · Maio 2026</div>
+          <div class="prog-name">PSA Pirarucu — Manejo Sustentável do Pirarucu no Amazonas</div>
+          <div class="prog-sub">Pagamento por serviços ambientais para comunidades envolvidas no manejo sustentável do pirarucu</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Novo!</span>
+          <div class="prog-value">R$ 7M</div>
+          <div class="prog-value-label">Total em 2026</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Programa RECÉM-LANÇADO (maio/2026) com investimento previsto de R$ 7 milhões em 2026. Habilitará organizações comunitárias no Amazonas que realizam manejo sustentável do pirarucu para receber PSA referente ao ano de 2025. Autazes, com suas comunidades ribeirinhas e acesso ao Rio Madeira e afluentes, tem potencial real de participação. Recursos do Green Climate Fund via Floresta+ Amazônia.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Bioeconomia</span>
+          <span class="tag">Pesca Sustentável</span>
+          <span class="tag">Comunidades Ribeirinhas</span>
+          <span class="tag">Novo Edital 2026</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Autazes tem comunidades com histórico de pesca artesanal e potencial de manejo</span></li>
+          <li><span class="icon warn">⚠</span><span>Necessário que organizações comunitárias estejam habilitadas junto ao IBAMA/CONAB</span></li>
+          <li><span class="icon warn">⚠</span><span>Verificar acordos de pesca e protocolos de manejo existentes no município</span></li>
+        </ul>
+        <div class="action-tag">→ Ação urgente: Acesso ao edital do PSA Pirarucu + mobilização das associações de pesca</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 5: União com Municípios -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#FFF8E1;">🏛️</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA · Federal · Decreto 11.687/2023 / Portaria GM/MMA 1.710/2026</div>
+          <div class="prog-name">Programa União com Municípios (UcM)</div>
+          <div class="prog-sub">Recursos para combate ao desmatamento e incêndios, estrutura de governança e PSA em 81 municípios prioritários</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge perdendo">✗ Não enquadrado</span>
+          <div class="prog-value">R$ 785M</div>
+          <div class="prog-value-label">Total nacional</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          O programa investe R$ 785 milhões em 81 municípios prioritários que respondem por ~78% do desmatamento amazônico. Os municípios do Amazonas inicialmente selecionados foram: Apuí, Boca do Acre, Canutama, Humaitá, Itapiranga, Lábrea, Manicoré, Maués e Novo Aripuanã. <strong>Autazes não consta na lista atual</strong>, mas o terceiro ciclo (2026) ainda permite adesões. Municípios elegíveis recebem R$ 700 mil em equipamentos (drones, caminhonetes, lanchas, sala de governança) mais recursos proporcionais à redução do desmatamento.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Fundo Amazônia</span>
+          <span class="tag">R$ 700K inicial</span>
+          <span class="tag">Performance-based</span>
+          <span class="tag">Governança Ambiental</span>
+          <span class="tag">PSA Assentamentos</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon cross">✗</span><span>Autazes não está na lista dos 81 municípios prioritários do UcM</span></li>
+          <li><span class="icon warn">⚠</span><span>Município deve articular com deputado estadual, federal ou senador para inclusão no 3º ciclo</span></li>
+          <li><span class="icon warn">⚠</span><span>Exige: SEMMAM ativa ✔, CMMA com reunião nos últimos 90 dias, corpo técnico focal</span></li>
+          <li><span class="icon warn">⚠</span><span>Prefeito deve assinar Termo de Adesão + apoio formal de vereador + parlamentares estaduais e federais</span></li>
+        </ul>
+        <div class="action-tag">→ Ação estratégica: Articulação política para inclusão no ciclo 2026 do UcM</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 6: FNMA -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">💰</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA · Federal · Lei 7.797/1989 — Retomado 2023</div>
+          <div class="prog-name">FNMA — Fundo Nacional do Meio Ambiente</div>
+          <div class="prog-sub">Financiamento de projetos socioambientais via editais — R$ 283 milhões orçados em 2026</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Requer Projeto</span>
+          <div class="prog-value">R$ 300K–800K</div>
+          <div class="prog-value-label">por projeto aprovado</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Mais antigo fundo ambiental da América Latina (1989), retomado em 2023. Em 2025 o orçamento triplicou para R$ 14 milhões e em 2026 está em R$ 283 milhões. Lança editais específicos para municípios e OSCs. Edital ativo: FNMA 1/2026 — ArborizaCidades (prazo até 6 de julho de 2026). Outros editais previstos: incêndios florestais no UcM (R$ 32M), educação ambiental (R$ 2,5M), catadores de recicláveis. SEMMAM pode concorrer diretamente como órgão público.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Arborização Urbana</span>
+          <span class="tag">Incêndios Florestais</span>
+          <span class="tag">Educação Ambiental</span>
+          <span class="tag">Catadores</span>
+          <span class="tag">Editais Abertos</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>SEMMAM pode submeter propostas diretamente como prefeitura municipal</span></li>
+          <li><span class="icon check">✔</span><span>Edital ArborizaCidades: prazo até 6/7/2026 — janela imediata!</span></li>
+          <li><span class="icon warn">⚠</span><span>Requer projeto técnico bem elaborado com justificativa ambiental e capacidade de execução</span></li>
+          <li><span class="icon warn">⚠</span><span>Necessário verificar lista de municípios elegíveis na retificação do Edital 1/2026</span></li>
+        </ul>
+        <div class="action-tag">→ Ação urgente: Elaborar e submeter proposta ao Edital FNMA 1/2026 – ArborizaCidades</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 6B: LIR - Lei de Incentivo à Reciclagem -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#FFF8E1;">♻️</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA · Federal · Lei 14.260/2021</div>
+          <div class="prog-name">LIR — Lei de Incentivo à Reciclagem</div>
+          <div class="prog-sub">Fomento a projetos de reciclagem, compostagem e inclusão de catadores via dedução de IR</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Prazo 30/07</span>
+          <div class="prog-value">Variável</div>
+          <div class="prog-value-label">por projeto</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Municípios e consórcios podem submeter projetos de infraestrutura, aquisição de equipamentos para coleta seletiva e inclusão produtiva de catadores no Transferegov.br. O mecanismo opera por incentivo fiscal, permitindo que empresas e pessoas físicas destinem parte do seu Imposto de Renda (IR) aos projetos aprovados. O ciclo 2026 está aberto até cerca de 30/07/2026.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Coleta Seletiva</span>
+          <span class="tag">Catadores</span>
+          <span class="tag">Incentivo Fiscal</span>
+          <span class="tag">Transferegov</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Município pode submeter propostas estruturantes para coleta seletiva e reciclagem</span></li>
+          <li><span class="icon warn">⚠</span><span>Prazo curto: submissões no Transferegov.br abertas apenas até final de julho/2026</span></li>
+          <li><span class="icon warn">⚠</span><span>Após aprovação, requer mobilização para captar patrocinadores via dedução do IR</span></li>
+        </ul>
+        <div class="action-tag">→ Ação urgente: Cadastrar projeto de estruturação da reciclagem no Transferegov.br</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 7: Novo PAC Saneamento -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E3F2FD;">💧</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MCidades · Federal · Marco Legal do Saneamento — Lei 14.026/2020</div>
+          <div class="prog-name">Novo PAC — Saneamento Básico (Água, Esgoto, Resíduos, Drenagem)</div>
+          <div class="prog-sub">Universalização do saneamento — R$ 22,1 bilhões selecionados em 2025</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Parcial</span>
+          <div class="prog-value">R$ 5–50M</div>
+          <div class="prog-value-label">por projeto de saneamento</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          O Novo PAC destinou R$ 61 bilhões ao saneamento desde 2023. Em 2026, segue com seleções para abastecimento de água urbano e rural, esgotamento sanitário, drenagem e resíduos sólidos. <strong>Condição obrigatória desde 1º/1/2025: o município deve possuir o Plano Municipal de Saneamento Básico (PMSB)</strong> para acessar recursos. Autazes possui o PMGIRS mas precisa verificar a existência do PMSB completo integrado (água, esgoto, drenagem + resíduos).
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Água Potável</span>
+          <span class="tag">Esgoto</span>
+          <span class="tag">Drenagem Urbana</span>
+          <span class="tag">Resíduos Sólidos</span>
+          <span class="tag">OGU + FGTS</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Autazes possui PMGIRS (Plano de Gestão de Resíduos Sólidos) — um componente do PMSB</span></li>
+          <li><span class="icon cross">✗</span><span>Plano Municipal de Saneamento Básico (PMSB) completo: não confirmado — bloqueio de acesso!</span></li>
+          <li><span class="icon warn">⚠</span><span>Elaborar PMSB é condição legal para acesso a recursos de saneamento da União desde 2025</span></li>
+          <li><span class="icon warn">⚠</span><span>Verificar se AM possui plano regional que substitua o PMSB municipal (exceção legal)</span></li>
+        </ul>
+        <div class="action-tag">→ Ação bloqueante: Elaborar ou validar o PMSB como pré-condição para todo o PAC Saneamento</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 7B: Funasa Saneamento Rural -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E3F2FD;">🚰</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">Funasa / MS · Federal · Programa Nacional de Saneamento Rural (PNSR)</div>
+          <div class="prog-name">Programas de Saneamento Rural e Tecnologias Apropriadas</div>
+          <div class="prog-sub">Soluções adaptadas ao bioma amazônico (ex: Salta-Z) e melhorias sanitárias domiciliares</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Requer Projeto</span>
+          <div class="prog-value">R$ 100K–250K+</div>
+          <div class="prog-value-label">Valores mínimos</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          A Funasa tem investido em soluções adaptadas ao bioma amazônico, como o sistema Salta-Z (miniestação de tratamento para água potável em comunidades ribeirinhas), além do PNSR que rege o esgotamento em áreas de várzea. Para acessar parcelas dos cerca de R$ 4 bilhões investidos pela autarquia, Autazes precisa submeter propostas via Carta-Consulta no sistema SIGA. Além disso, o alinhamento com as novas Microrregiões de Saneamento Básico do estado é essencial para captar futuros créditos do BID e Banco Mundial.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Salta-Z</span>
+          <span class="tag">Saneamento Rural</span>
+          <span class="tag">Sistema SIGA</span>
+          <span class="tag">Microrregiões</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon warn">⚠</span><span>Submeter propostas de engenharia via Carta-Consulta no sistema SIGA da Funasa</span></li>
+          <li><span class="icon warn">⚠</span><span>Valores mínimos: R$ 250 mil (Melhorias Sanitárias Domiciliares) e R$ 100 mil (Resíduos)</span></li>
+          <li><span class="icon cross">✗</span><span>Ausência de projetos de engenharia prontos e plano de saneamento impede a submissão</span></li>
+          <li><span class="icon warn">⚠</span><span>Necessidade de alinhamento estratégico com as Microrregiões de Saneamento Básico (Estado)</span></li>
+        </ul>
+        <div class="action-tag">→ Ação urgente: Elaborar projetos de engenharia sanitária e submeter no sistema SIGA</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 8: Florestas Produtivas (MDA) -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🌱</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MDA / MMA · Federal · 2025–2026</div>
+          <div class="prog-name">Programa Nacional de Florestas Produtivas</div>
+          <div class="prog-sub">Recuperação de áreas degradadas por sistemas agroflorestais — R$ 37M para AM, AC e AP</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Acessível</span>
+          <div class="prog-value">R$ 37M</div>
+          <div class="prog-value-label">AM + AC + AP (2026)</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Programa lançado na COP30 para recuperar áreas degradadas via sistemas agroflorestais. Para o Amazonas, Acre e Amapá, o MDA prevê R$ 37 milhões. A expectativa é beneficiar 7.646 famílias e recuperar 1.593 hectares até o final de 2026. Autazes, com agricultura familiar e áreas de pasto degradado, tem perfil adequado. O programa é executado por organizações parceiras e coordenado pelo MDA.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Agroflorestas</span>
+          <span class="tag">Recuperação Áreas</span>
+          <span class="tag">Agricultura Familiar</span>
+          <span class="tag">ATER</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Autazes está no Amazonas — estado elegível para os R$ 37 milhões previstos</span></li>
+          <li><span class="icon warn">⚠</span><span>SEMMAM deve articular com IDAM e MDA para inclusão de famílias de Autazes</span></li>
+          <li><span class="icon warn">⚠</span><span>Identificar organizações locais parceiras elegíveis para executar o programa</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Contato com MDA/IDAM para inclusão de Autazes nos lotes de execução</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 9: Fundo Amazônia / BNDES -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🏦</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">BNDES / MMA · Federal · Fundo Internacional (Noruega, Alemanha + 7 países)</div>
+          <div class="prog-name">Fundo Amazônia / BNDES</div>
+          <div class="prog-sub">Financiamento não-reembolsável para projetos de conservação e uso sustentável — R$ 2+ bi aprovados em 2025</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge potencial">◉ Potencial</span>
+          <div class="prog-value">R$ 1–10M</div>
+          <div class="prog-value-label">por projeto aprovado</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          O Fundo Amazônia aprovou R$ 1,189 bilhão no 1º semestre de 2025 — recorde histórico. Em 2025 acumulou R$ 2+ bilhões aprovados. Financia projetos para conservação, monitoramento, bioeconomia, povos indígenas e desenvolvimento sustentável. A SEMMAM pode apresentar projetos diretamente ao BNDES ou em parceria com ONGs e organismos do estado. É a maior fonte não-reembolsável para projetos ambientais na Amazônia.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Não-reembolsável</span>
+          <span class="tag">Conservação</span>
+          <span class="tag">Bioeconomia</span>
+          <span class="tag">Monitoramento</span>
+          <span class="tag">Povos Indígenas</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Autazes está no bioma Amazônia — elegível como escopo territorial</span></li>
+          <li><span class="icon warn">⚠</span><span>Requer projeto técnico robusto com teoria da mudança e indicadores mensuráveis</span></li>
+          <li><span class="icon warn">⚠</span><span>Recomendar parceria com FAS, IDESAM, IDAM ou SEMA para elaboração do projeto</span></li>
+          <li><span class="icon warn">⚠</span><span>Contato com BNDES para chamadas abertas e critérios vigentes</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Elaborar projeto com parceiro técnico e submeter ao Fundo Amazônia/BNDES</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 10: ProFloresta+ (BNDES/Petrobras) -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#F3E5F5;">📈</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">BNDES / Petrobras · Federal · Lançado março 2025</div>
+          <div class="prog-name">ProFloresta+ — Créditos de Carbono por Restauração</div>
+          <div class="prog-sub">Financiamento de restauração florestal via geração e comercialização de créditos de carbono</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge potencial">◉ Emergente</span>
+          <div class="prog-value">15M t CO₂</div>
+          <div class="prog-value-label">créditos previstos futuros</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Programa recém-lançado (março/2025) pelo BNDES em parceria com a Petrobras para restauração de áreas degradadas na Amazônia por meio de créditos de carbono. Prevê restauração de até 50 mil hectares em futuras etapas, com geração de até 15 milhões de toneladas de créditos. Autazes, com áreas de pastagem e pousio degradadas, poderia integrar projetos de restauração. Oportunidade estratégica de longo prazo para o município.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Carbono</span>
+          <span class="tag">Restauração Florestal</span>
+          <span class="tag">Mercado Voluntário</span>
+          <span class="tag">Longo Prazo</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Amazônia é o foco geográfico do ProFloresta+</span></li>
+          <li><span class="icon warn">⚠</span><span>Requer mapeamento de áreas degradadas e elegíveis para restauração em Autazes</span></li>
+          <li><span class="icon warn">⚠</span><span>Seguir próximos editais do BNDES para novas etapas do ProFloresta+</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Monitorar editais do BNDES + mapear áreas degradadas para restauração</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA 11: Bolsa Verde ATER -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🤝</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">MMA · Federal · ATER Socioambiental</div>
+          <div class="prog-name">Assistência Técnica e Extensão Rural Socioambiental (ATER/Bolsa Verde)</div>
+          <div class="prog-sub">Apoio técnico para famílias do Bolsa Verde — R$ 60 milhões em chamada pública</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Acessível</span>
+          <div class="prog-value">R$ 60M</div>
+          <div class="prog-value-label">edital nacional 2024/2025</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Chamada pública de R$ 60 milhões para contratação de entidades de ATER Socioambiental para 15.000 famílias do Bolsa Verde na Amazônia. Cobre 60 territórios, incluindo municípios do Amazonas. Inclui manejo florestal, pesca artesanal, agricultura familiar e turismo de base comunitária. As entidades (associações, cooperativas, prefeituras via convênio) podem se candidatar.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Assistência Técnica</span>
+          <span class="tag">Manejo Florestal</span>
+          <span class="tag">Pesca Artesanal</span>
+          <span class="tag">Turismo Comunitário</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon warn">⚠</span><span>Verificar se Autazes está incluído nos 29 municípios do edital ATER do Bolsa Verde</span></li>
+          <li><span class="icon warn">⚠</span><span>Identificar entidade local qualificada para execução da ATER socioambiental</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Verificar inclusão de Autazes no ATER Bolsa Verde + articular entidade executora</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== STATE PROGRAMS ===== -->
+<div class="section">
+  <div class="section-eyebrow">Esfera Estadual — Amazonas</div>
+  <div class="section-title">Programas Estaduais de Captação</div>
+  <div class="section-desc">O Governo do Amazonas possui instrumentos específicos de fomento ambiental municipal, com novidades legislativas importantes em 2025 que abrem oportunidades diretas para Autazes.</div>
+
+  <div class="prog-grid">
+
+    <!-- PROGRAMA EST 1: ICMS Ecológico -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">💚</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">SEMA-AM / SEFAZ-AM · Estadual · Lei 7.431/2025 — Decreto 51.818/2025</div>
+          <div class="prog-name">ICMS Ecológico do Amazonas — NOVO (2025)</div>
+          <div class="prog-sub">5% do ICMS distribuído por critérios ambientais e climáticos aos municípios — início 2026</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Ativo 2026</span>
+          <div class="prog-value">5% do ICMS</div>
+          <div class="prog-value-label">cota-parte municipal</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Lei aprovada em abril/2025 — marco histórico para os municípios amazônicos. Cria o DRIEco (Indicador de Distribuição do Rateio do ICMS Ecológico) composto por IAP (Índice de Áreas Protegidas) e IQA (Índice de Qualidade Ambiental Municipal). Em 2026, todos os municípios com pelo menos 1 UC recebem algum valor (somente IAP). A partir de 2027, o IQA entra em vigor e premia gestão ambiental ativa. Os critérios do IQA são exatamente o que a SEMMAM precisa estruturar.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">5% ICMS</span>
+          <span class="tag">IAP + IQA</span>
+          <span class="tag">Áreas Protegidas</span>
+          <span class="tag">Gestão Ambiental</span>
+          <span class="tag">Início 2026</span>
+        </div>
+
+        <div class="icms-grid">
+          <div class="icms-card">
+            <div class="ic-label">2026 — Já vigente</div>
+            <div class="ic-title">IAP — Áreas Protegidas</div>
+            <div class="ic-score">0–5 <span class="ic-max">pts</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Todos os municípios com UC federal, estadual ou municipal recebem algum valor</div>
+          </div>
+          <div class="icms-card">
+            <div class="ic-label">2027 em diante</div>
+            <div class="ic-title">IQA — Qualidade Ambiental</div>
+            <div class="ic-score">0–5 <span class="ic-max">pts</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Critérios de gestão ambiental municipal — SEMMAM, CMMA, FMMA, PGIRS, PMSB, legislação</div>
+          </div>
+          <div class="icms-card">
+            <div class="ic-label">Fórmula final</div>
+            <div class="ic-title">DRIEco (distribuição)</div>
+            <div class="ic-score">IAP×0,5<span class="ic-max">+IQA×0,5</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Soma ponderada publicada anualmente pela SEMA até 30/mai para SEFAZ</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div style="font-size:11.5px;font-weight:700;color:var(--forest);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">Critérios IQA — Situação de Autazes</div>
+          <ul class="criteria-list">
+            <li>
+              <span class="criteria-status cs-ok">OK</span>
+              <span><strong>Secretaria Municipal de Meio Ambiente (SEMMAM)</strong> — Autazes possui secretaria exclusiva de meio ambiente (+1,0 ponto)</span>
+            </li>
+            <li>
+              <span class="criteria-status cs-pend">VERIFICAR</span>
+              <span><strong>Conselho Municipal de Meio Ambiente (CMMA) ativo</strong> — deve ter realizado ao menos 1 reunião nos últimos 12 meses. Documentar ata. (+1,0 ponto)</span>
+            </li>
+            <li>
+              <span class="criteria-status cs-pend">VERIFICAR</span>
+              <span><strong>Fundo Municipal de Meio Ambiente regulamentado</strong> — verificar se existe lei municipal criando e regulamentando o fundo. (+1,0 ponto)</span>
+            </li>
+            <li>
+              <span class="criteria-status cs-ok">OK</span>
+              <span><strong>Plano de Gestão Integrada de Resíduos Sólidos (PGIRS)</strong> — Autazes possui PMGIRS (SEMA-AM, 2024). (+1,0 ponto)</span>
+            </li>
+            <li>
+              <span class="criteria-status cs-no">AUSENTE</span>
+              <span><strong>Percentual de saneamento básico adequado nos domicílios urbanos</strong> — requer elaboração do PMSB. Pontuação proporcional à cobertura.</span>
+            </li>
+            <li>
+              <span class="criteria-status cs-pend">VERIFICAR</span>
+              <span><strong>Legislação de licenciamento e fiscalização de atividades de impacto local</strong> — verificar se Autazes possui lei de licenciamento ambiental municipal. (+1,0 ponto)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="action-tag">→ Ação imediata: Regularizar CMMA, Fundo Municipal e legislação antes de 30/jan/2027 (prazo para envio à SEMA)</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA EST 2: REDD+ Jurisdicional -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E3F2FD;">🌐</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">SEMA-AM / CADA · Estadual · Lei 7.432 de 04/04/2025</div>
+          <div class="prog-name">Sistema Jurisdicional de REDD+ do Amazonas</div>
+          <div class="prog-sub">Captação de receitas de carbono florestal para o estado e municípios — nova lei 2025</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge potencial">◉ Emergente</span>
+          <div class="prog-value">Bilionário</div>
+          <div class="prog-value-label">potencial carbono estadual</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Lei estadual aprovada em abril/2025 institui o Sistema Jurisdicional de REDD+ do Amazonas. A SEMA coordena os programas e a CADA (Companhia Amazonense de Desenvolvimento e Mobilização de Ativos) gerencia e negocia os ativos ambientais (créditos de carbono). Os municípios que demonstrarem redução de desmatamento e boas práticas ambientais poderão participar da distribuição dos resultados da comercialização de créditos de carbono. Autazes precisa se posicionar nesse sistema.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">REDD+</span>
+          <span class="tag">Carbono Florestal</span>
+          <span class="tag">CADA-AM</span>
+          <span class="tag">Mercado Internacional</span>
+          <span class="tag">Novo 2025</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>Autazes está no Amazonas — incluso no escopo territorial do sistema estadual</span></li>
+          <li><span class="icon warn">⚠</span><span>Participação ativa na governança do sistema estadual requer interlocução com SEMA/CADA</span></li>
+          <li><span class="icon warn">⚠</span><span>Municípios com menor desmatamento e boa gestão ambiental receberão parcela maior dos resultados</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Articulação com SEMA/CADA para posicionamento de Autazes no REDD+ jurisdicional</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA EST 3: Guardiões da Floresta -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E8F5E9;">🛡️</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">SEMA-AM · Estadual · Decreto Estadual 44.968/2021</div>
+          <div class="prog-name">Programa Guardiões da Floresta (ex-Bolsa Floresta)</div>
+          <div class="prog-sub">PSA para comunidades em Unidades de Conservação Estaduais do Amazonas</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Condicional</span>
+          <div class="prog-value">R$ 50+/mês</div>
+          <div class="prog-value-label">/ família em UC</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Sucessor do Programa Bolsa Floresta, gerido pela SEMA-AM. Recompensa comunidades tradicionais residentes em UCs estaduais que se comprometam com o desmatamento zero. Possui componentes de renda, associação, família e social. Se Autazes possui comunidades dentro ou no entorno de UCs estaduais de uso sustentável, elas são elegíveis. Necessário verificar a presença de RDS, RESEX ou floresta estadual no território do município.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">UCs Estaduais</span>
+          <span class="tag">Comunidades Tradicionais</span>
+          <span class="tag">Desmatamento Zero</span>
+          <span class="tag">PSA Mensal</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon warn">⚠</span><span>Verificar se Autazes possui comunidades em UCs estaduais de uso sustentável (RDS, RESEX estadual, FLOE)</span></li>
+          <li><span class="icon warn">⚠</span><span>Articular com SEMA-AM para cadastramento das famílias elegíveis</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Mapeamento de UCs estaduais no território + articulação com SEMA</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA EST 4: FEMA-AM -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#FFF8E1;">🏛️</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">SEMA-AM · Estadual</div>
+          <div class="prog-name">FEMA-AM — Fundo Estadual de Meio Ambiente</div>
+          <div class="prog-sub">Fundo estadual para projetos ambientais dos municípios do Amazonas</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge parcial">⚠ Requer Projeto</span>
+          <div class="prog-value">A consultar</div>
+          <div class="prog-value-label">por edital/chamada</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Vinculado à SEMA-AM, o Fundo Estadual de Meio Ambiente financia projetos ambientais nos municípios do Amazonas. As chamadas públicas e convênios com prefeituras permitem executar ações de educação ambiental, licenciamento, fiscalização e recuperação de áreas. A SEMMAM deve monitorar ativamente os editais do FEMA para submeter projetos.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Educação Ambiental</span>
+          <span class="tag">Licenciamento</span>
+          <span class="tag">Fiscalização</span>
+          <span class="tag">Convênios</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>SEMMAM pode firmar convênios e submeter propostas diretamente à SEMA-AM</span></li>
+          <li><span class="icon warn">⚠</span><span>Monitorar site da SEMA para editais ativos e prazos de inscrição</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Contato com SEMA-AM + monitoramento permanente dos editais do FEMA</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA EST 5: IDAM -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#E3F2FD;">🌾</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">IDAM · Estadual</div>
+          <div class="prog-name">IDAM — Assistência Técnica Ambiental e Agroflorestal</div>
+          <div class="prog-sub">Instituto de Desenvolvimento Agropecuário e Florestal Sustentável — ATER para Autazes</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge acessivel">✔ Acessível</span>
+          <div class="prog-value">ATER</div>
+          <div class="prog-value-label">Serviços técnicos</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          O IDAM possui escritório em Autazes (7ª sub-região) e presta assistência técnica e extensão rural aos produtores. A SEMMAM pode articular com o IDAM para: regularização ambiental rural, orientação para CAR, sistemas agroflorestais e acesso a programas de crédito do PRONAF Verde. O IDAM é o canal estadual para enquadrar produtores nos programas federais de agricultura familiar com viés ambiental.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">ATER Local</span>
+          <span class="tag">CAR</span>
+          <span class="tag">PRONAF Verde</span>
+          <span class="tag">Parceria estratégica</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon check">✔</span><span>IDAM possui escritório em Autazes — parceiro imediato disponível</span></li>
+          <li><span class="icon check">✔</span><span>IDAM é instrumento para enquadrar produtores em PSA e programas federais</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Reunião com IDAM local para alinhamento de ações conjuntas de regularização ambiental</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMA EST 6: Compensação Potássio Autazes -->
+    <div class="prog-card">
+      <div class="prog-header">
+        <div class="prog-icon" style="background:#FFF8E1;">⛏️</div>
+        <div class="prog-title-block">
+          <div class="prog-origin">IPAAM / Potássio do Brasil · Estadual / Municipal</div>
+          <div class="prog-name">Compensação Ambiental do Projeto Potássio Autazes</div>
+          <div class="prog-sub">Medidas compensatórias e condicionantes socioambientais do licenciamento</div>
+        </div>
+        <div class="prog-right">
+          <span class="status-badge potencial">◉ Estratégico</span>
+          <div class="prog-value">Milionário</div>
+          <div class="prog-value-label">potencial em medidas</div>
+        </div>
+      </div>
+      <div class="prog-body">
+        <div class="prog-desc">
+          Com o avanço do licenciamento do projeto de mineração de potássio pela mineradora Potássio do Brasil (investimento estimado em R$ 13 bilhões), a SEMMAM tem o direito legal de pleitear a destinação das medidas compensatórias e condicionantes socioambientais para o fortalecimento da gestão florestal e pesqueira local.
+        </div>
+        <div class="prog-tags">
+          <span class="tag">Licenciamento</span>
+          <span class="tag">Mineração</span>
+          <span class="tag">Condicionantes</span>
+          <span class="tag">Impacto Local</span>
+        </div>
+        <ul class="req-list">
+          <li><span class="icon warn">⚠</span><span>Acompanhar o processo de licenciamento ambiental no IPAAM</span></li>
+          <li><span class="icon warn">⚠</span><span>Articular junto à Potássio do Brasil a destinação de compensações para projetos da SEMMAM</span></li>
+        </ul>
+        <div class="action-tag">→ Ação: Pleitear formalmente recursos e medidas de compensação do projeto</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== LOSSES ===== -->
+<div class="section">
+  <div class="section-eyebrow">Diagnóstico de Perdas</div>
+  <div class="section-title">Recursos Estimados que Estão Sendo Perdidos</div>
+  <div class="section-desc">Estimativa dos valores que Autazes deixa de capturar anualmente por ausência de enquadramento formal, falta de projetos ou lacunas institucionais na SEMMAM.</div>
+
+  <div class="loss-section">
+    <div class="loss-title">⚠ Mapa de Recursos Perdidos ou Sub-Capturados</div>
+    <table class="loss-table">
+      <thead>
+        <tr>
+          <th>Programa / Fonte</th>
+          <th>Perda Estimada</th>
+          <th>Motivo Principal</th>
+          <th>Urgência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ICMS Ecológico AM — Critérios IQA (2027+)</strong></td>
+          <td class="loss-val">R$ 2–5M/ano</td>
+          <td class="loss-reason">CMMA inativo, FMMA sem regulamentação, ausência de PMSB e legislação ambiental local incompleta podem custar pontos decisivos no IQA</td>
+          <td><span class="status-badge acessivel" style="font-size:10px;">Imediata</span></td>
+        </tr>
+        <tr>
+          <td><strong>Programa União com Municípios (UcM)</strong></td>
+          <td class="loss-val">R$ 2–5M/ano</td>
+          <td class="loss-reason">Autazes não está na lista dos 81 municípios prioritários. Perda do aporte inicial de R$ 700K em equipamentos + recursos performance-based</td>
+          <td><span class="status-badge parcial" style="font-size:10px;">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>PSA Floresta+ — Agricultores Familiares</strong></td>
+          <td class="loss-val">R$ 1–8M/ano</td>
+          <td class="loss-reason">Agricultores locais com áreas conservadas sem inscrição ativa no programa. CAR irregular ou não comunicado às famílias</td>
+          <td><span class="status-badge acessivel" style="font-size:10px;">Urgente</span></td>
+        </tr>
+        <tr>
+          <td><strong>Novo PAC — Saneamento Básico</strong></td>
+          <td class="loss-val">R$ 5–20M/ciclo</td>
+          <td class="loss-reason">Ausência do Plano Municipal de Saneamento Básico (PMSB) bloqueia juridicamente o acesso a recursos do PAC Saneamento desde jan/2025</td>
+          <td><span class="status-badge perdendo" style="font-size:10px;">Bloqueante</span></td>
+        </tr>
+        <tr>
+          <td><strong>Funasa — Saneamento Rural e Tecnologias</strong></td>
+          <td class="loss-val">R$ 250K–1M+/ano</td>
+          <td class="loss-reason">Falta de projetos de engenharia para submissão no SIGA (ex: Salta-Z, MSD) e falta de alinhamento com as Microrregiões de Saneamento</td>
+          <td><span class="status-badge parcial" style="font-size:10px;">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bolsa Verde — Famílias não cadastradas</strong></td>
+          <td class="loss-val">R$ 480K–1,2M/ano</td>
+          <td class="loss-reason">Famílias ribeirinhas e de TI elegíveis sem busca ativa de cadastro no CadÚnico e adesão ao programa</td>
+          <td><span class="status-badge parcial" style="font-size:10px;">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>FNMA — Editais sem proposta submetida</strong></td>
+          <td class="loss-val">R$ 300K–800K/edital</td>
+          <td class="loss-reason">Fundo reativado com orçamento triplicado e editais abertos, mas SEMMAM sem estrutura de projetos para submeter propostas</td>
+          <td><span class="status-badge parcial" style="font-size:10px;">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Lei de Incentivo à Reciclagem (LIR)</strong></td>
+          <td class="loss-val">Variável</td>
+          <td class="loss-reason">Perda da janela de julho/2026 no Transferegov.br para projetos de coleta seletiva por ausência de cadastro técnico</td>
+          <td><span class="status-badge acessivel" style="font-size:10px;">Urgente</span></td>
+        </tr>
+        <tr>
+          <td><strong>PSA Pirarucu (novo edital 2026)</strong></td>
+          <td class="loss-val">R$ 200–500K</td>
+          <td class="loss-reason">Novo edital lançado em maio/2026 não divulgado às comunidades de pesca de Autazes. Janela se fecha sem mobilização imediata</td>
+          <td><span class="status-badge acessivel" style="font-size:10px;">Urgente</span></td>
+        </tr>
+        <tr>
+          <td><strong>Fundo Amazônia — Projetos municipais</strong></td>
+          <td class="loss-val">R$ 1–5M/projeto</td>
+          <td class="loss-reason">Sem projetos formalizados sendo desenvolvidos pela SEMMAM para submissão ao BNDES</td>
+          <td><span class="status-badge potencial" style="font-size:10px;">Médio Prazo</span></td>
+        </tr>
+        <tr>
+          <td><strong>Emendas Parlamentares — Meio Ambiente</strong></td>
+          <td class="loss-val">R$ 500K–3M/ano</td>
+          <td class="loss-reason">Falta de articulação ativa com deputados federais/estaduais e senadores para direcionar emendas a projetos ambientais de Autazes</td>
+          <td><span class="status-badge parcial" style="font-size:10px;">Alta</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="loss-total">
+      <div class="loss-total-label">⚠ Total Estimado de Recursos Perdidos / Anualmente</div>
+      <div class="loss-total-val">R$ 2,5–18 milhões/ano</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEGAL FRAMEWORK ===== -->
+<div class="section">
+  <div class="section-eyebrow">Marco Legal</div>
+  <div class="section-title">Legislação de Referência para Captação</div>
+  <div class="section-desc">Conjunto normativo federal e estadual que fundamenta o acesso dos municípios aos programas mapeados. Conhecer essas leis é pré-requisito para elaboração de projetos e defesa de propostas.</div>
+
+  <div class="law-grid">
+    <div class="law-card">
+      <div class="law-icon">📋</div>
+      <div>
+        <div class="law-num">Federal · Decreto 11.687/2023 · Portaria MMA 1.710/2026</div>
+        <div class="law-title">Programa União com Municípios (UcM)</div>
+        <div class="law-desc">Institui o programa e define critérios de adesão, performance e repasse para municípios prioritários na Amazônia.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🌿</div>
+      <div>
+        <div class="law-num">Federal · Lei 14.119/2021</div>
+        <div class="law-title">Política Nacional de Pagamento por Serviços Ambientais (PNPSA)</div>
+        <div class="law-desc">Marco legal para PSA no Brasil — base dos programas Floresta+, Bolsa Verde e REDD+.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">💧</div>
+      <div>
+        <div class="law-num">Federal · Lei 14.026/2020</div>
+        <div class="law-title">Marco Legal do Saneamento Básico</div>
+        <div class="law-desc">Exige PMSB como condição para acesso a recursos federais de saneamento a partir de jan/2025.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">♻️</div>
+      <div>
+        <div class="law-num">Federal · Lei 12.305/2010</div>
+        <div class="law-title">Política Nacional de Resíduos Sólidos (PNRS)</div>
+        <div class="law-desc">Obriga municípios a possuírem PMGIRS — condição para recursos de resíduos. Autazes já possui.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🏭</div>
+      <div>
+        <div class="law-num">Federal · Lei 14.260/2021</div>
+        <div class="law-title">Lei de Incentivo à Reciclagem (LIR)</div>
+        <div class="law-desc">Mecanismo de incentivo fiscal via IR para financiar infraestrutura de reciclagem e catadores.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🌲</div>
+      <div>
+        <div class="law-num">Federal · Lei 12.651/2012</div>
+        <div class="law-title">Código Florestal Brasileiro</div>
+        <div class="law-desc">Define APP, Reserva Legal e o CAR — pré-requisito para Floresta+, regularização e PSA rural.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">💰</div>
+      <div>
+        <div class="law-num">Federal · Lei 7.797/1989</div>
+        <div class="law-title">Fundo Nacional do Meio Ambiente (FNMA)</div>
+        <div class="law-desc">Cria o FNMA — mais antigo fundo ambiental da AL, com orçamento de R$ 283 mi em 2026.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🔬</div>
+      <div>
+        <div class="law-num">Federal · Lei 12.512/2011 · Decreto 11.635/2023</div>
+        <div class="law-title">Programa Bolsa Verde</div>
+        <div class="law-desc">Institui o PSA para comunidades em UCs, assentamentos diferenciados e territórios tradicionais.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">💚</div>
+      <div>
+        <div class="law-num">Estadual AM · Lei 7.431/2025 · Decreto 51.818/2025</div>
+        <div class="law-title">ICMS Ecológico do Amazonas</div>
+        <div class="law-desc">Cria o DRIEco — 5% do ICMS por critérios ambientais. IAP vigente em 2026; IQA a partir de 2027.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🌐</div>
+      <div>
+        <div class="law-num">Estadual AM · Lei 7.432/2025</div>
+        <div class="law-title">Sistema Jurisdicional de REDD+ do Amazonas</div>
+        <div class="law-desc">Cria o sistema de REDD+ estadual gerido pela CADA. Abre oportunidade de participação municipal.</div>
+      </div>
+    </div>
+    <div class="law-card">
+      <div class="law-icon">🏔️</div>
+      <div>
+        <div class="law-num">Estadual AM · Decreto 44.968/2021</div>
+        <div class="law-title">Programa Guardiões da Floresta (ex-Bolsa Floresta)</div>
+        <div class="law-desc">Regula o PSA estadual para comunidades em UCs estaduais de uso sustentável no Amazonas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRIORITY MATRIX ===== -->
+<div class="section">
+  <div class="section-eyebrow">Análise Estratégica</div>
+  <div class="section-title">Matriz de Priorização — Urgência × Valor</div>
+  <div class="section-desc">Classificação das oportunidades por urgência de ação e potencial de geração de recursos, para orientar o planejamento operacional da SEMMAM.</div>
+
+  <div class="matrix-grid">
+    <div class="matrix-quad q1">
+      <div class="matrix-quad-header">
+        <div class="matrix-quad-label">🔴 Urgente + Alto Valor</div>
+      </div>
+      <div class="matrix-item"><div class="matrix-num">1</div><div>Elaborar PMSB — pré-condição para PAC Saneamento (R$ 5–20M bloqueados)</div></div>
+      <div class="matrix-item"><div class="matrix-num">2</div><div>Mobilizar agricultores familiares para PSA Floresta+ (prazo 30/06/2026 — R$ 1–8M/ano)</div></div>
+      <div class="matrix-item"><div class="matrix-num">3</div><div>Submeter proposta ao Edital FNMA ArborizaCidades (prazo 06/07/2026)</div></div>
+      <div class="matrix-item"><div class="matrix-num">4</div><div>Divulgar PSA Pirarucu às comunidades de pesca (novo edital maio/2026)</div></div>
+      <div class="matrix-item"><div class="matrix-num">5</div><div>Cadastrar projeto de reciclagem na LIR via Transferegov (prazo ~30/07)</div></div>
+    </div>
+    <div class="matrix-quad q2">
+      <div class="matrix-quad-header">
+        <div class="matrix-quad-label">🟠 Alta Prioridade + Médio Valor</div>
+      </div>
+      <div class="matrix-item"><div class="matrix-num">1</div><div>Regularizar CMMA (ata de reunião) para IQA do ICMS Ecológico</div></div>
+      <div class="matrix-item"><div class="matrix-num">2</div><div>Criar/regulamentar Fundo Municipal de Meio Ambiente (FMMA)</div></div>
+      <div class="matrix-item"><div class="matrix-num">3</div><div>Busca ativa de famílias para Bolsa Verde (CadÚnico + articulação ICMBio)</div></div>
+      <div class="matrix-item"><div class="matrix-num">4</div><div>Articulação com IDAM para regularização do CAR dos produtores</div></div>
+    </div>
+    <div class="matrix-quad q3">
+      <div class="matrix-quad-header">
+        <div class="matrix-quad-label">🔵 Estratégico + Alto Valor (Médio Prazo)</div>
+      </div>
+      <div class="matrix-item"><div class="matrix-num">1</div><div>Articulação política para inclusão de Autazes no UcM (ciclo 2026 – R$ 700K + variável)</div></div>
+      <div class="matrix-item"><div class="matrix-num">2</div><div>Elaborar projeto para Fundo Amazônia/BNDES em parceria com SEMA, FAS ou IDESAM</div></div>
+      <div class="matrix-item"><div class="matrix-num">3</div><div>Posicionamento no REDD+ Jurisdicional do Amazonas (CADA + SEMA)</div></div>
+      <div class="matrix-item"><div class="matrix-num">4</div><div>Articulação com parlamentares para emendas ambientais (R$ 500K–3M/ano)</div></div>
+      <div class="matrix-item"><div class="matrix-num">5</div><div>Pleitear destinação de medidas compensatórias do Projeto Potássio Autazes</div></div>
+    </div>
+    <div class="matrix-quad q4">
+      <div class="matrix-quad-header">
+        <div class="matrix-quad-label">🟣 Estruturante (Base para tudo)</div>
+      </div>
+      <div class="matrix-item"><div class="matrix-num">1</div><div>Criar setor de projetos e captação na SEMMAM — 1 técnico dedicado</div></div>
+      <div class="matrix-item"><div class="matrix-num">2</div><div>Atualizar legislação ambiental municipal (licenciamento local)</div></div>
+      <div class="matrix-item"><div class="matrix-num">3</div><div>Mapear UCs federais, estaduais e TI no território de Autazes</div></div>
+      <div class="matrix-item"><div class="matrix-num">4</div><div>Monitorar ProFloresta+ e Florestas Produtivas para inserção de Autazes nos próximos ciclos</div></div>
+      <div class="matrix-item"><div class="matrix-num">5</div><div>Elaborar projetos de engenharia sanitária para submissão no SIGA/Funasa</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ACTION TIMELINE ===== -->
+<div class="section">
+  <div class="section-eyebrow">Plano de Ação</div>
+  <div class="section-title">Cronograma de Ações Prioritárias</div>
+  <div class="section-desc">Sequência recomendada de ações para a SEMMAM maximizar a captação de recursos no ciclo 2026–2028, com prazos críticos e responsáveis sugeridos.</div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot">1</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Até 06/07/2026 — URGENTE</span>
+        <span class="timeline-title">Submissão ao Edital FNMA ArborizaCidades</span>
+      </div>
+      <div class="timeline-body">
+        O prazo do Edital FNMA 1/2026 encerra em 6 de julho. SEMMAM deve verificar se Autazes está nos Anexos do edital retificado e submeter proposta de arborização urbana. Valor por projeto: R$ 300K–500K. Responsável: Secretário(a) de Meio Ambiente + equipe técnica.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">2</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Até 30/06/2026 — URGENTE</span>
+        <span class="timeline-title">Mobilização de Agricultores para PSA Floresta+ Amazônia</span>
+      </div>
+      <div class="timeline-body">
+        Prazo estendido até 30/06/2026. Mobilizar agricultores familiares com CAR regularizado e imóveis de até 4 módulos fiscais para inscrição no PSA. Cada propriedade pode receber de R$ 1.500 a R$ 28.000/ano.
+        <ul>
+          <li>Contato com IDAM local para lista de agricultores com CAR regularizado</li>
+          <li>Divulgação nas comunidades rurais via rádio, WhatsApp e visitas de campo</li>
+          <li>Apoio aos agricultores no processo de inscrição no IPAAM/MMA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">★</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Até 30/07/2026 — URGENTE</span>
+        <span class="timeline-title">Cadastro de Projetos na Lei de Incentivo à Reciclagem (LIR)</span>
+      </div>
+      <div class="timeline-body">
+        O ciclo 2026 do Transferegov.br para a LIR encerra no final de julho. A SEMMAM deve cadastrar projetos voltados à coleta seletiva, equipamentos, compostagem ou inclusão de catadores de Autazes.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">3</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Julho–Agosto 2026</span>
+        <span class="timeline-title">Regularização Institucional da SEMMAM para ICMS Ecológico</span>
+      </div>
+      <div class="timeline-body">
+        Garantir pontuação máxima no IQA até 30/jan/2027 (prazo de envio à SEMA). Ações necessárias:
+        <ul>
+          <li>Convocar reunião do CMMA e lavrar ata (critério: ao menos 1 reunião/12 meses)</li>
+          <li>Aprovar lei municipal criando e regulamentando o Fundo Municipal de Meio Ambiente</li>
+          <li>Verificar e atualizar lei de licenciamento ambiental de impacto local</li>
+          <li>Organizar documentação comprobatória para envio à SEMA-AM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">4</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Julho–Outubro 2026</span>
+        <span class="timeline-title">Elaboração do PMSB e Alinhamento às Microrregiões</span>
+      </div>
+      <div class="timeline-body">
+        O Plano Municipal de Saneamento Básico (PMSB) é pré-condição legal obrigatória para qualquer recurso federal de saneamento (PAC, Funasa, FGTS).
+        <ul>
+          <li>Iniciar elaboração ou validação do PMSB (água, esgoto, drenagem e resíduos).</li>
+          <li>Preparar projetos de engenharia (ex: Salta-Z, MSD) para submissão imediata via Carta-Consulta no sistema SIGA da Funasa.</li>
+          <li>Articular alinhamento de Autazes às Microrregiões de Saneamento Básico do estado para acessar futuros créditos internacionais (BID/Banco Mundial).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">5</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Setembro–Novembro 2026</span>
+        <span class="timeline-title">Articulação Política para União com Municípios (UcM)</span>
+      </div>
+      <div class="timeline-body">
+        Iniciar articulação com a bancada parlamentar para inclusão de Autazes no 3º ciclo do UcM (2026). Exige apoio escrito de deputado estadual + deputado federal ou senador do AM. O aporte inicial é de R$ 700 mil em equipamentos + performance-based.
+        <ul>
+          <li>Reunião com gabinetes de parlamentares do Amazonas</li>
+          <li>Apresentação do diagnóstico de desmatamento de Autazes ao MMA</li>
+          <li>Assinatura do Termo de Adesão pelo prefeito + Câmara Municipal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">6</div>
+      <div class="timeline-header">
+        <span class="timeline-period">2026–2027</span>
+        <span class="timeline-title">Elaboração de Projeto para Fundo Amazônia / BNDES</span>
+      </div>
+      <div class="timeline-body">
+        Com parceiro técnico (IDESAM, FAS, SEMA ou ONG ambiental), elaborar projeto de conservação, bioeconomia ou monitoramento para submissão ao Fundo Amazônia. Cada projeto aprovado recebe de R$ 1M a R$ 10M em recursos não-reembolsáveis. Ação de longo prazo e maior impacto.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">7</div>
+      <div class="timeline-header">
+        <span class="timeline-period">2026–2027</span>
+        <span class="timeline-title">Articulação de Condicionantes do Projeto Potássio Autazes</span>
+      </div>
+      <div class="timeline-body">
+        Com o licenciamento da mineração em andamento (R$ 13 bi), a SEMMAM deve pleitear junto ao IPAAM e à mineradora que as medidas compensatórias e condicionantes socioambientais sejam destinadas ao fortalecimento da gestão florestal e pesqueira local de Autazes.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">8</div>
+      <div class="timeline-header">
+        <span class="timeline-period">Permanente — Estrutura</span>
+        <span class="timeline-title">Criar Célula de Captação de Recursos na SEMMAM</span>
+      </div>
+      <div class="timeline-body">
+        A principal lacuna estrutural é a ausência de um servidor ou equipe dedicada a prospectar e formalizar propostas. Recomenda-se designar formalmente ao menos 1 servidor como responsável por:
+        <ul>
+          <li>Monitorar editais federais e estaduais permanentemente</li>
+          <li>Elaborar projetos e propostas técnicas</li>
+          <li>Manter cadastros atualizados no SICONV, SIGA e demais sistemas de transferência</li>
+          <li>Articular com SEMA-AM, MMA, BNDES e parceiros técnicos</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CONSOLIDATED TABLE ===== -->
+<div class="section">
+  <div class="section-eyebrow">Resumo Financeiro</div>
+  <div class="section-title">Mapa Consolidado de Potencial de Captação</div>
+  <div class="section-desc">Síntese do potencial financeiro de cada fonte identificada, classificada por esfera e horizonte temporal.</div>
+
+  <table class="loss-table" style="background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden;">
+    <thead>
+      <tr>
+        <th style="padding:12px 16px;">Fonte / Programa</th>
+        <th style="padding:12px 16px;">Esfera</th>
+        <th style="padding:12px 16px;">Potencial Estimado</th>
+        <th style="padding:12px 16px;">Horizonte</th>
+        <th style="padding:12px 16px;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px 16px;"><strong>PSA Floresta+ — Agricultores Familiares</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;" class="loss-val" style="color:var(--forest3);">R$ 1–8M/ano</td>
+        <td style="padding:10px 16px;font-size:12px;">Imediato (2026)</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Ação urgente</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Novo PAC — Saneamento</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 5–20M/ciclo</td>
+        <td style="padding:10px 16px;font-size:12px;">Após PMSB (2027)</td>
+        <td style="padding:10px 16px;"><span class="status-badge perdendo">✗ Bloqueado</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Funasa — Saneamento Rural</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 250K–1M+</td>
+        <td style="padding:10px 16px;font-size:12px;">Imediato (SIGA)</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Projetos Eng.</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>ICMS Ecológico AM</strong></td>
+        <td style="padding:10px 16px;">Estadual</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 2–5M/ano</td>
+        <td style="padding:10px 16px;font-size:12px;">2026 (parcial) / 2027+</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Parcial</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Bolsa Verde</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 480K–1,2M/ano</td>
+        <td style="padding:10px 16px;font-size:12px;">Imediato (2026)</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Mobilização</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>FNMA — Editais</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 300K–800K/edital</td>
+        <td style="padding:10px 16px;font-size:12px;">Imediato (jul/2026)</td>
+        <td style="padding:10px 16px;"><span class="status-badge acessivel">✔ Prazo aberto</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Lei de Inc. à Reciclagem (LIR)</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">Variável</td>
+        <td style="padding:10px 16px;font-size:12px;">Imediato (30/07)</td>
+        <td style="padding:10px 16px;"><span class="status-badge acessivel">✔ Transferegov</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Programa União com Municípios</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 700K + variável</td>
+        <td style="padding:10px 16px;font-size:12px;">2026 (articulação)</td>
+        <td style="padding:10px 16px;"><span class="status-badge potencial">◉ Potencial</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>PSA Pirarucu (novo edital)</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 200–500K</td>
+        <td style="padding:10px 16px;font-size:12px;">2026 (urgente)</td>
+        <td style="padding:10px 16px;"><span class="status-badge acessivel">✔ Novo edital</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Florestas Produtivas (MDA)</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 1–3M</td>
+        <td style="padding:10px 16px;font-size:12px;">2026–2027</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Articular</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Fundo Amazônia / BNDES</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 1–10M/projeto</td>
+        <td style="padding:10px 16px;font-size:12px;">Médio prazo (2027+)</td>
+        <td style="padding:10px 16px;"><span class="status-badge potencial">◉ Elaborar projeto</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Emendas Parlamentares — MA</strong></td>
+        <td style="padding:10px 16px;">Federal</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 500K–3M/ano</td>
+        <td style="padding:10px 16px;font-size:12px;">2026–2027</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Articulação</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>REDD+ Jurisdicional AM</strong></td>
+        <td style="padding:10px 16px;">Estadual</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">A definir</td>
+        <td style="padding:10px 16px;font-size:12px;">2027–2028</td>
+        <td style="padding:10px 16px;"><span class="status-badge potencial">◉ Emergente</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>FEMA-AM + Guardiões da Floresta</strong></td>
+        <td style="padding:10px 16px;">Estadual</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">R$ 200K–1M</td>
+        <td style="padding:10px 16px;font-size:12px;">Permanente</td>
+        <td style="padding:10px 16px;"><span class="status-badge parcial">⚠ Monitorar</span></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 16px;"><strong>Compensação Projeto Potássio</strong></td>
+        <td style="padding:10px 16px;">Estadual / Mun.</td>
+        <td style="padding:10px 16px;font-weight:700;color:var(--forest3);">Milionário</td>
+        <td style="padding:10px 16px;font-size:12px;">2026–2027</td>
+        <td style="padding:10px 16px;"><span class="status-badge potencial">◉ Articular</span></td>
+      </tr>
+      <tr style="background:var(--sage2);font-weight:700;">
+        <td style="padding:12px 16px;border-top:2px solid var(--line);">TOTAL POTENCIAL ESTIMADO</td>
+        <td style="padding:12px 16px;border-top:2px solid var(--line);">Federal + Estadual</td>
+        <td style="padding:12px 16px;border-top:2px solid var(--line);font-family:'DM Serif Display',serif;font-size:20px;color:var(--forest);">R$ 5–18 milhões/ano</td>
+        <td style="padding:12px 16px;border-top:2px solid var(--line);">Anual</td>
+        <td style="padding:12px 16px;border-top:2px solid var(--line);">Estimativa Revisada</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ===== CONCLUSIONS ===== -->
+<div class="section">
+  <div class="section-eyebrow">Conclusão</div>
+  <div class="section-title">Síntese Diagnóstica</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div style="background:var(--sage2);border:1px solid var(--line);border-radius:12px;padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--forest);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;">✅ Pontos Fortes de Autazes</div>
+      <ul style="list-style:none;font-size:13px;color:var(--ink);">
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">🌳 Cobertura florestal &gt; 70% — elegível para todos os programas de PSA</li>
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">🌿 SEMMAM ativa — critério de elegibilidade para ICMS Ecológico e UcM</li>
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">♻️ PMGIRS aprovado (SEMA-AM, 2024) — componente essencial do PMSB</li>
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">🐟 Comunidades de pesca artesanal — elegíveis para PSA Pirarucu</li>
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">🏡 Povo indígena Mura e ribeirinhos — Bolsa Verde e programas específicos</li>
+        <li style="padding:5px 0;border-bottom:1px solid var(--line);">📍 Localização estratégica — Rio Madeira, área de transição Solimões</li>
+        <li style="padding:5px 0;">⛏️ Projeto Potássio Autazes — Oportunidade de compensações ambientais</li>
+      </ul>
+    </div>
+    <div style="background:var(--red-lt);border:1px solid #F5C6C3;border-radius:12px;padding:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;">⚠ Lacunas Críticas a Resolver</div>
+      <ul style="list-style:none;font-size:13px;color:var(--ink);">
+        <li style="padding:5px 0;border-bottom:1px solid rgba(200,0,0,.1);">📄 Ausência do PMSB completo — bloqueia todo o PAC Saneamento</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(200,0,0,.1);">🏛️ CMMA pode estar inativo — risco de perda no IQA do ICMS Ecológico</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(200,0,0,.1);">💰 FMMA não confirmado — critério do ICMS Ecológico não atendido</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(200,0,0,.1);">🗂️ Sem equipe de captação/projetos na SEMMAM — principal gargalo</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(200,0,0,.1);">📍 Não está no UcM — perde R$ 700K+ de aporte estruturante</li>
+        <li style="padding:5px 0;">🌾 CAR dos agricultores irregulares — barreira para PSA rural</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:var(--forest);color:white;border-radius:12px;padding:28px 30px;margin-top:24px;">
+    <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:12px;color:#A8D5B0;">Mensagem Central do Diagnóstico</div>
+    <div style="font-size:14px;line-height:1.75;color:rgba(255,255,255,.88);">
+      Autazes possui <strong style="color:white;">ativos ambientais excepcionais</strong> — floresta, rio, comunidades tradicionais, povo indígena e cobertura de 7.599 km² — que o posicionam como município elegível para R$ 5 a 18 milhões por ano em captações ambientais. Contudo, a janela de oportunidade está se estreitando: <strong style="color:#F9E4A4;">prazos críticos vencem em junho e julho de 2026</strong> (PSA Floresta+, FNMA ArborizaCidades e LIR), e a reforma do ICMS Ecológico entra em vigor em 2027 com critérios que já devem ser atendidos. A <strong style="color:white;">ação imediata mais valiosa</strong> que a SEMMAM pode tomar é formalizar um servidor como responsável exclusivo por captação de recursos — o retorno potencial é de dezenas de vezes o custo do cargo.
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div>
+    <strong>Secretaria Municipal de Meio Ambiente — SEMMAM</strong><br>
+    Prefeitura Municipal de Autazes / Amazonas
+  </div>
+  <div style="text-align:right;">
+    Diagnóstico elaborado em <strong>julho de 2026</strong><br>
+    Fontes: MMA, BNDES, MCidades, SEMA-AM, IBGE, Agência Gov, Diário Oficial
+  </div>
+</div>
+
+</body>
+</html>
