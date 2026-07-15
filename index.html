@@ -516,6 +516,25 @@
     .cover { padding: 40px 48px; }
     .section { padding: 36px 0; }
   }
+
+  @media (max-width: 768px) {
+    .cover { padding: 40px 24px; }
+    .cover h1 { font-size: 32px; }
+    .container { padding: 0 16px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .profile-grid { grid-template-columns: 1fr; gap: 16px; }
+    .law-grid { grid-template-columns: 1fr; }
+    .icms-grid { grid-template-columns: 1fr; }
+    .matrix-grid { grid-template-columns: 1fr; }
+    .prog-header { flex-direction: column; align-items: flex-start; }
+    .prog-right { align-items: flex-start; margin-top: 12px; }
+    .loss-total { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .loss-table thead { display: none; }
+    .loss-table, .loss-table tbody, .loss-table tr, .loss-table td { display: block; width: 100%; }
+    .loss-table td { padding: 8px 0; border-bottom: none; }
+    .loss-table tr { border-bottom: 1px solid rgba(200,0,0,.08); padding-bottom: 12px; margin-bottom: 12px; }
+    .footer { flex-direction: column; text-align: center; }
+  }
 </style>
 </head>
 <body>
